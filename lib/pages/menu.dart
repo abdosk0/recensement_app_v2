@@ -23,7 +23,7 @@ class _MenuState extends State<Menu> {
               text: 'Nouvel Enregistrement',
               icon: Icons.add_home,
               onPressed: () {
-                Navigator.of(context).pushReplacementNamed("menage");
+                Navigator.of(context).pushNamed("menage");
               },
             ),
             const SizedBox(height: 20),
@@ -36,7 +36,9 @@ class _MenuState extends State<Menu> {
             CardMenu(
               text: 'Envoyés',
               icon: Icons.send,
-              onPressed: () {},
+              onPressed: () {
+                Navigator.pushNamed(context, 'menageList');
+              },
             ),
             const SizedBox(height: 20),
             CardMenu(

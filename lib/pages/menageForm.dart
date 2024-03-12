@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import '../pages/familleForm.dart';
+import 'package:recensement_app_test/pages/menage_indicateur_page.dart';
 import 'package:sqflite/sqflite.dart';
 import '../helpers/databaseHelper.dart';
 import '../models/menage.dart';
@@ -107,7 +107,7 @@ class _MenageFormState extends State<MenageForm> {
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(
-            builder: (context) => FamilleForm(
+            builder: (context) => MenageIndicatorPage(
               menageId: menageId,
               numberOfFamilies: int.parse(_nombreFamillesController.text),
             ),
@@ -133,7 +133,10 @@ class _MenageFormState extends State<MenageForm> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CustomAppBar(title: "Menage"),
+      appBar: const CustomAppBar(
+        title: "Menage",
+        showBackButton: true,
+      ),
       body: Stack(
         children: [
           Center(

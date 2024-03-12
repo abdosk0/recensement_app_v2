@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:recensement_app_test/pages/homePage.dart';
 import 'package:recensement_app_test/pages/menageForm.dart';
+import 'package:recensement_app_test/pages/menage_list_page.dart';
 import 'package:recensement_app_test/pages/menu.dart';
 import 'package:recensement_app_test/pages/splashScreen.dart';
 
@@ -21,6 +22,7 @@ class MyApp extends StatelessWidget {
         "home": (context) => const HomePage(),
         "menu": (context) => const Menu(),
         "menage": (context) => const MenageForm(),
+        "menageList": (context) => MenageListPage(),
       },
     );
   }

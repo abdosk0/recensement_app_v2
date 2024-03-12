@@ -2,6 +2,10 @@ import 'dart:async';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
+import '../models/famille.dart';
+import '../models/menage.dart';
+import '../models/personne.dart';
+
 class DatabaseHelper {
   static Database? _database;
 
@@ -33,5 +37,44 @@ class DatabaseHelper {
     await db.execute(
       'CREATE TABLE Personne(personne_id INTEGER PRIMARY KEY, prenom TEXT, nom TEXT, sexe TEXT, dateDeNaissance TEXT, chefFamille INTEGER, lienParente TEXT, famille_id INTEGER, FOREIGN KEY (famille_id) REFERENCES Famille(id_famille))',
     );
+  }
+
+   static Future<void> updateMenage(Menage menage) async {
+    final db = await database;
+    await db.update(
+      'Menage',
+      menage.toMap(),
+      where: 'id_menage = ?',
+      whereArgs: [menage.id_menage],
+    );
+  }
+
+  static Future<void> updateFamille(Famille famille) async {
+    final db = await database;
+    await db.update(
+      'Famille',
+      famille.toMap(),
+      where: 'id_famille = ?',
+      whereArgs: [famille.id_famille],
+    );
+  }
+
+  static Future<void> updatePersonne(Personne personne) async {
+    final db = await database;
+    await db.update(
+      'Personne',
+      personne.toMap(),
+      where: 'personne_id = ?',
+      whereArgs: [personne.personne_id],
+    );
+  }
+
+  static Future<List<Map<String, dynamic>>> _queryAllRows(String table) async {
+    final Database db = await database;
+    return db.query(table);
+  }
+
+  static Future<List<Map<String, dynamic>>> getAllMenages() async {
+    return _queryAllRows('Menage');
   }
 }

@@ -1,6 +1,6 @@
 {
-    "name": "recensement_app_test",
-    "short_name": "recensement_app_test",
+    "name": "recensement_app",
+    "short_name": "recensement",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
