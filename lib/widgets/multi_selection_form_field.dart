@@ -1,21 +1,24 @@
 import 'package:flutter/material.dart';
 
+import '../models/valeur_possible.dart';
+
 class MultiSelectionFormField extends StatefulWidget {
   final String label;
-  final List<String>? options;
-  final List<String>? selectedOptions;
-  final ValueChanged<List<String>>? onChanged;
+  final List<ValeurPossible> valeursPossibles;
+  final List<String> selectedOptions;
+  final ValueChanged<List<String>> onChanged;
 
   const MultiSelectionFormField({
     Key? key,
     required this.label,
-     this.options,
-     this.selectedOptions,
-     this.onChanged,
+    required this.valeursPossibles,
+    required this.selectedOptions,
+    required this.onChanged,
   }) : super(key: key);
 
   @override
-  _MultiSelectionFormFieldState createState() => _MultiSelectionFormFieldState();
+  _MultiSelectionFormFieldState createState() =>
+      _MultiSelectionFormFieldState();
 }
 
 class _MultiSelectionFormFieldState extends State<MultiSelectionFormField> {
@@ -24,6 +27,7 @@ class _MultiSelectionFormFieldState extends State<MultiSelectionFormField> {
   @override
   void initState() {
     super.initState();
+    _selectedOptions.addAll(widget.selectedOptions);
   }
 
   @override
@@ -38,18 +42,18 @@ class _MultiSelectionFormFieldState extends State<MultiSelectionFormField> {
         SizedBox(height: 8),
         Wrap(
           spacing: 8,
-          children: widget.options!.map((option) {
+          children: widget.valeursPossibles.map((value) {
             return FilterChip(
-              label: Text(option),
-              selected: _selectedOptions.contains(option),
+              label: Text(value.nomValeur),
+              selected: _selectedOptions.contains(value.nomValeur),
               onSelected: (selected) {
                 setState(() {
                   if (selected) {
-                    _selectedOptions.add(option);
+                    _selectedOptions.add(value.nomValeur);
                   } else {
-                    _selectedOptions.remove(option);
+                    _selectedOptions.remove(value.nomValeur);
                   }
-                  widget.onChanged!(_selectedOptions);
+                  widget.onChanged(_selectedOptions);
                 });
               },
               selectedColor: Color(0xFFA1F0F2),

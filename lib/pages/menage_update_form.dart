@@ -29,6 +29,7 @@ class _MenageUpdateFormState extends State<MenageUpdateForm> {
   @override
   void initState() {
     super.initState();
+    _loadCities();
     _nomMenageController = TextEditingController(text: widget.menage.nom);
     _adresseMenageController =
         TextEditingController(text: widget.menage.adresse);
@@ -36,15 +37,16 @@ class _MenageUpdateFormState extends State<MenageUpdateForm> {
         TextEditingController(text: widget.menage.quartier);
     _nombreFamillesController =
         TextEditingController(text: widget.menage.nombre_familles.toString());
-    _loadCities();
+    _selectedCity = widget.menage.ville;
   }
 
   Future<void> _loadCities() async {
     try {
       String citiesJson =
           await rootBundle.loadString('assets/json/ma_cities.json');
-      _citiesData = jsonDecode(citiesJson).cast<Map<String, dynamic>>();
-      _selectedCity = widget.menage.ville;
+      setState(() {
+        _citiesData = jsonDecode(citiesJson).cast<Map<String, dynamic>>();
+      });
     } catch (e) {
       print('Error loading cities: $e');
     }

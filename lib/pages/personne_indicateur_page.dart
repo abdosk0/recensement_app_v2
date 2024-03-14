@@ -1,48 +1,45 @@
 import 'package:flutter/material.dart';
+import 'package:recensement_app_test/pages/listFamille.dart';
 import 'package:recensement_app_test/widgets/customAppbar.dart';
-import 'package:lottie/lottie.dart';
+import 'package:lottie/lottie.dart'; // Import Lottie package
 import '../helpers/api_service.dart';
+import '../models/famille.dart';
 import '../models/indicateur.dart';
 import '../widgets/dynamic_indicator.dart';
-import 'familleForm.dart';
 
-class MenageIndicatorPage extends StatefulWidget {
-  final int menageId;
-  final int numberOfFamilies;
+class PersonneIndicatorPage extends StatefulWidget {
+  final List<Famille> families;
 
-  const MenageIndicatorPage({
-    super.key,
-    required this.menageId,
-    required this.numberOfFamilies,
-  });
+  const PersonneIndicatorPage({Key? key, required this.families})
+      : super(key: key);
 
   @override
-  _MenageIndicatorPageState createState() => _MenageIndicatorPageState();
+  _PersonneIndicatorPageState createState() => _PersonneIndicatorPageState();
 }
 
-class _MenageIndicatorPageState extends State<MenageIndicatorPage> {
+class _PersonneIndicatorPageState extends State<PersonneIndicatorPage> {
   final ApiService _apiService = ApiService();
-  late List<Indicateur> _menageIndicators = [];
+  late List<Indicateur> _personneIndicators = [];
 
   @override
   void initState() {
     super.initState();
-    _fetchMenageIndicators();
+    _fetchPersonneIndicators();
   }
 
-  Future<void> _fetchMenageIndicators() async {
+  Future<void> _fetchPersonneIndicators() async {
     try {
       // Simulating a delay for demonstration purposes
-      await Future.delayed(const Duration(seconds: 2));
+      await Future.delayed(Duration(seconds: 2));
 
       final List<Indicateur> indicators = await _apiService.fetchIndicateurs(1);
       setState(() {
-        _menageIndicators = indicators
-            .where((indicateur) => indicateur.objectIndicateur == 'Ménage')
+        _personneIndicators = indicators
+            .where((indicateur) => indicateur.objectIndicateur == 'Personne')
             .toList();
       });
     } catch (e) {
-      print('Error fetching Menage indicators: $e');
+      print('Error fetching Personne indicators: $e');
     }
   }
 
@@ -50,21 +47,21 @@ class _MenageIndicatorPageState extends State<MenageIndicatorPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const CustomAppBar(
-        title: 'Indicateurs Menage',
+        title: 'Indicateurs Personne',
       ),
-      body: _menageIndicators.isEmpty
+      body: _personneIndicators.isEmpty
           ? Center(
               child: Lottie.asset(
-                'assets/animations/loading_indicator.json', // Path to the animation
+                'assets/animations/loading_indicator.json',
                 width: 200,
                 height: 200,
                 fit: BoxFit.cover,
               ),
             )
           : ListView.builder(
-              itemCount: _menageIndicators.length,
+              itemCount: _personneIndicators.length,
               itemBuilder: (context, index) {
-                final indicateur = _menageIndicators[index];
+                final indicateur = _personneIndicators[index];
                 return Padding(
                   padding: const EdgeInsets.symmetric(vertical: 8.0),
                   child: DynamicIndicatorItem(indicateur: indicateur),
@@ -73,14 +70,11 @@ class _MenageIndicatorPageState extends State<MenageIndicatorPage> {
             ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          final menageId = widget.menageId;
+          final families = widget.families;
           Navigator.pushReplacement(
             context,
             MaterialPageRoute(
-              builder: (context) => FamilleForm(
-                menageId: menageId,
-                numberOfFamilies: widget.numberOfFamilies,
-              ),
+              builder: (context) => ListFamille(families: families),
             ),
           );
         },

@@ -11,38 +11,62 @@ import '../models/indicateur.dart';
 class DynamicIndicatorItem extends StatelessWidget {
   final Indicateur indicateur;
 
-  const DynamicIndicatorItem({super.key, required this.indicateur});
+  const DynamicIndicatorItem({Key? key, required this.indicateur})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    if (indicateur.objectIndicateur == 'Ménage') {
-      switch (indicateur.type) {
-        case 'Text':
-          return TextFieldWidget(
-            labelText: indicateur.nomIndicateur,
-            controller: TextEditingController(),
-          );
-        case 'Nombre':
-          return NombreFormField(
-            labelText: indicateur.nomIndicateur,
-            controller: TextEditingController(),
-          );
-        case 'Dropdown':
-          return DropdownFormField(labelText: indicateur.nomIndicateur);
-        case 'Radio':
-          return RadioFormField(label: indicateur.nomIndicateur);
-        case 'Date':
-          return DateFormField(
-            label: indicateur.nomIndicateur,
-            controller: TextEditingController(),
-          );
-        case 'Multiselection':
-          return MultiSelectionFormField(label: indicateur.nomIndicateur);
-        default:
-          return Container(); // Placeholder for unsupported types
-      }
-    } else {
-      return Container(); // Placeholder for indicators not related to "Menage"
+    switch (indicateur.type) {
+      case 'Text':
+        return TextFieldWidget(
+          labelText: indicateur.nomIndicateur,
+          controller: TextEditingController(),
+        );
+      case 'Nombre':
+        return NombreFormField(
+          labelText: indicateur.nomIndicateur,
+          controller: TextEditingController(),
+        );
+      case 'Dropdown':
+        final firstOption = indicateur.valeursPossibles.isNotEmpty
+            ? indicateur.valeursPossibles.first.nomValeur
+            : null;
+        return DropdownFormField(
+          label: indicateur.nomIndicateur,
+          selectedOption: firstOption,
+          onChanged: (String? value) {
+            // Handle dropdown value change here
+          },
+          valeursPossibles: indicateur.valeursPossibles,
+        );
+      case 'Radio':
+        final firstOption = indicateur.valeursPossibles.isNotEmpty
+            ? indicateur.valeursPossibles.first.nomValeur
+            : null;
+        return RadioFormField(
+          label: indicateur.nomIndicateur,
+          selectedOption: firstOption,
+          onChanged: (String? value) {
+            // Handle radio button value change here
+          },
+          valeursPossibles: indicateur.valeursPossibles,
+        );
+      case 'Date':
+        return DateFormField(
+          label: indicateur.nomIndicateur,
+          controller: TextEditingController(),
+        );
+      case 'Multiselection':
+        return MultiSelectionFormField(
+          label: indicateur.nomIndicateur,
+          selectedOptions: [], // Provide initial selected options here
+          onChanged: (List<String> value) {
+            // Handle multi-selection value change here
+          },
+          valeursPossibles: indicateur.valeursPossibles,
+        );
+      default:
+        return Container(); // Placeholder for unsupported types
     }
   }
 }

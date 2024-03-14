@@ -1,6 +1,7 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:recensement_app_test/models/personne.dart';
+import 'package:recensement_app_test/pages/personne_indicateur_page.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:date_time_picker/date_time_picker.dart';
 
@@ -9,7 +10,6 @@ import '../models/famille.dart';
 import '../widgets/customAppBar.dart';
 import '../widgets/textFieldWidget.dart';
 import 'childrenForm.dart';
-import 'listFamille.dart';
 
 class PersonneForm extends StatefulWidget {
   final int familleId;
@@ -293,7 +293,7 @@ class _PersonneFormState extends State<PersonneForm> {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => ListFamille(families: families),
+              builder: (context) => PersonneIndicatorPage(families: families),
             ),
           );
         }

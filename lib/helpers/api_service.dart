@@ -44,10 +44,42 @@ class ApiService {
     if (response.statusCode == 200) {
       final decodedBody = utf8.decode(response.bodyBytes);
       final Map<String, dynamic> responseData = json.decode(decodedBody);
-      final List<dynamic> indicateursData = responseData['indicateurs'];
-      return indicateursData
-          .map((indicateur) => Indicateur.fromJson(indicateur))
-          .toList();
+      if (responseData.containsKey('chapitres')) {
+        final chapitresData = responseData['chapitres'];
+
+        // Check if chapitresData is a List
+        if (chapitresData is List) {
+          final List<Indicateur> indicateurs = [];
+
+          // Process each chapitre
+          for (final chapitreData in chapitresData) {
+            // Check if chapitreData contains the 'indicateurs' key
+            if (chapitreData.containsKey('indicateurs')) {
+              final indicateursData = chapitreData['indicateurs'];
+
+              // Check if indicateursData is a List
+              if (indicateursData is List) {
+                // Process each element of the list
+                for (final indicateurData in indicateursData) {
+                  // Create an Indicateur object and add it to the list
+                  indicateurs.add(Indicateur.fromJson(indicateurData));
+                }
+              } else {
+                throw Exception('Indicateurs data is not a List');
+              }
+            } else {
+              throw Exception('Indicateurs key not found in chapitreData');
+            }
+          }
+
+          // Return the list of Indicateurs
+          return indicateurs;
+        } else {
+          throw Exception('Chapitres data is not a List');
+        }
+      } else {
+        throw Exception('Chapitres key not found in responseData');
+      }
     } else {
       throw Exception('Failed to load indicateurs');
     }

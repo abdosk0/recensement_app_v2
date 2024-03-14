@@ -42,7 +42,7 @@ class _CityDropdownState extends State<VilleDropdown> {
           ),
           child: DropdownButtonFormField<String>(
             value: widget.selectedCity,
-            onChanged: widget.onChanged,
+            onChanged: widget.onChanged, // Pass the onChanged callback here
             items: cityNames.map<DropdownMenuItem<String>>((String cityName) {
               return DropdownMenuItem<String>(
                 value: cityName,

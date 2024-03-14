@@ -1,3 +1,5 @@
+import 'valeur_possible.dart';
+
 class Indicateur {
   final int id;
   final String codeIndicateur;
@@ -7,6 +9,7 @@ class Indicateur {
   final String type;
   final bool obligatoire;
   final String objectIndicateur;
+  final List<ValeurPossible> valeursPossibles; // Added field
 
   Indicateur({
     required this.id,
@@ -17,9 +20,20 @@ class Indicateur {
     required this.type,
     required this.obligatoire,
     required this.objectIndicateur,
+    required this.valeursPossibles,
   });
 
   factory Indicateur.fromJson(Map<String, dynamic> json) {
+    // Parse the "valeursPossibles" list
+    List<ValeurPossible> valeursPossibles = [];
+    if (json['valeursPossibles'] != null) {
+      valeursPossibles = List<ValeurPossible>.from(
+        json['valeursPossibles'].map(
+          (value) => ValeurPossible.fromJson(value),
+        ),
+      );
+    }
+
     return Indicateur(
       id: json['id'],
       codeIndicateur: json['codeIndicateur'],
@@ -29,6 +43,7 @@ class Indicateur {
       type: json['type'],
       obligatoire: json['obligatoire'],
       objectIndicateur: json['objectIndicateur'],
+      valeursPossibles: valeursPossibles,
     );
   }
 }

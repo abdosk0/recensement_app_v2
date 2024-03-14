@@ -5,10 +5,10 @@ class DateFormField extends StatefulWidget {
   final TextEditingController controller;
 
   const DateFormField({
-    Key? key,
+    super.key,
     required this.label,
     required this.controller,
-  }) : super(key: key);
+  });
 
   @override
   _DateFormFieldState createState() => _DateFormFieldState();
@@ -39,9 +39,9 @@ class _DateFormFieldState extends State<DateFormField> {
       children: [
         Text(
           widget.label,
-          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+          style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
         ),
-        SizedBox(height: 8),
+        const SizedBox(height: 8),
         GestureDetector(
           onTap: () => _selectDate(context),
           child: AbsorbPointer(
@@ -49,19 +49,19 @@ class _DateFormFieldState extends State<DateFormField> {
               controller: widget.controller,
               decoration: InputDecoration(
                 filled: true,
-                fillColor: Color(0xFFA1F0F2),
+                fillColor: const Color(0xFFA1F0F2),
                 enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(15),
-                  borderSide: BorderSide(color: Color(0xFFA1F0F2)),
+                  borderSide: const BorderSide(color: Color(0xFFA1F0F2)),
                 ),
                 focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(15),
-                  borderSide: BorderSide(color: Color(0xFF008A90)),
+                  borderSide: const BorderSide(color: Color(0xFF008A90)),
                 ),
-                contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-                suffixIcon: Icon(Icons.calendar_today),
+                contentPadding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                suffixIcon: const Icon(Icons.calendar_today),
               ),
-              style: TextStyle(color: Colors.black),
+              style: const TextStyle(color: Colors.black),
             ),
           ),
         ),

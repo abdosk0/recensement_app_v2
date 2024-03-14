@@ -2,7 +2,7 @@ import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:date_time_picker/date_time_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:recensement_app_test/models/personne.dart';
-import 'package:recensement_app_test/pages/listFamille.dart';
+import 'package:recensement_app_test/pages/personne_indicateur_page.dart';
 import 'package:sqflite/sqflite.dart';
 
 import '../helpers/databaseHelper.dart';
@@ -236,7 +236,7 @@ class _ChildrenFormState extends State<ChildrenForm> {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => ListFamille(families: families),
+            builder: (context) => PersonneIndicatorPage(families: families),
           ),
         );
       },

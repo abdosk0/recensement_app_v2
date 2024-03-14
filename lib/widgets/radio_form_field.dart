@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
 
+import '../models/valeur_possible.dart';
+
 class RadioFormField extends StatelessWidget {
   final String label;
-  final List<String>? options;
-  final ValueChanged<String?>? onChanged;
+  final List<ValeurPossible> valeursPossibles;
+  final ValueChanged<String?> onChanged;
   final String? selectedOption;
 
   const RadioFormField({
     Key? key,
     required this.label,
-     this.options,
-     this.onChanged,
-     this.selectedOption,
+    required this.valeursPossibles,
+    required this.onChanged,
+    required this.selectedOption,
   }) : super(key: key);
 
   @override
@@ -25,13 +27,13 @@ class RadioFormField extends StatelessWidget {
         ),
         SizedBox(height: 8),
         Column(
-          children: options!.map((option) {
+          children: valeursPossibles.map((value) {
             return RadioListTile<String>(
               title: Text(
-                option,
+                value.nomValeur,
                 style: TextStyle(color: Colors.black),
               ),
-              value: option,
+              value: value.nomValeur,
               groupValue: selectedOption,
               onChanged: onChanged,
               activeColor: Color(0xFFA1F0F2),

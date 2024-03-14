@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
 
+import '../models/valeur_possible.dart';
+
 class DropdownFormField extends StatelessWidget {
-  final String labelText;
-  final List<String>? options;
+  final String label;
+  final List<ValeurPossible> valeursPossibles;
   final String? selectedOption;
-  final ValueChanged<String?>? onChanged;
+  final ValueChanged<String?> onChanged;
 
   const DropdownFormField({
     Key? key,
-    required this.labelText,
-     this.options,
-     this.selectedOption,
-     this.onChanged, 
+    required this.label,
+    required this.valeursPossibles,
+    required this.selectedOption,
+    required this.onChanged,
   }) : super(key: key);
 
   @override
@@ -20,17 +22,17 @@ class DropdownFormField extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          labelText,
+          label,
           style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
         ),
         SizedBox(height: 8),
         DropdownButtonFormField<String>(
           value: selectedOption,
           onChanged: onChanged,
-          items: options?.map((option) {
+          items: valeursPossibles.map((value) {
             return DropdownMenuItem<String>(
-              value: option,
-              child: Text(option),
+              value: value.nomValeur,
+              child: Text(value.nomValeur),
             );
           }).toList(),
           decoration: InputDecoration(
